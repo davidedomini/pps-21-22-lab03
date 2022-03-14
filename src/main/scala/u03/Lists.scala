@@ -38,7 +38,7 @@ object Lists extends App:
     def mapWithFlatMap[A, B](l: List[A])(mapper: A => B): List[B] =
       flatMap(l)(v => Cons(mapper(v), Nil()))
 
-    def FilterWithFlatMap[A](l1: List[A])(pred: A => Boolean): List[A] =
+    def filterWithFlatMap[A](l1: List[A])(pred: A => Boolean): List[A] =
       val f = (v:A) => pred(v) match
         case true => Cons(v, Nil())
         case _ => Nil()
