@@ -3,6 +3,8 @@ package u03
 import org.junit.*
 import org.junit.Assert.*
 import Lists.*
+import u02.Optionals.*
+import u02.AlgebraicDataTypes.*
 
 class ListTest:
   import List.*
@@ -41,3 +43,12 @@ class ListTest:
   @Test def testFilterWithFlatMap() =
     assertEquals(Cons(20, Cons(30, Nil())), filterWithFlatMap(l)(_ >= 20))
     assertEquals(Cons(10, Cons(30, Nil())), filterWithFlatMap(l)(_ != 20))
+
+  @Test def testMax() =
+    assertEquals(Option.Some(25), max(Cons(10, Cons(25, Cons(20, Nil())))))
+    assertEquals(Option.None(), max(Nil()))
+
+  @Test def testGetTeacherCourses() =
+    assertEquals(Cons("OS", Cons("PPS", Nil())), getTeacherCourses(Cons(Person.Student("Davide", 23), Cons(Person.Teacher("Ghini", "OS"), Cons(Person.Student("Simone", 22), Cons(Person.Teacher("Viroli", "PPS"), Nil()))))))
+    assertEquals(Cons("OS", Cons("PPS", Nil())), getTeacherCoursesWithFlatMap(Cons(Person.Student("Davide", 23), Cons(Person.Teacher("Ghini", "OS"), Cons(Person.Student("Simone", 22), Cons(Person.Teacher("Viroli", "PPS"), Nil()))))))
+

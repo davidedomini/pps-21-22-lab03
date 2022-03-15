@@ -1,4 +1,6 @@
 package u03
+import u02.Optionals.*
+import u02.AlgebraicDataTypes.*
 
 object Lists extends App:
 
@@ -39,11 +41,29 @@ object Lists extends App:
       flatMap(l)(v => Cons(mapper(v), Nil()))
 
     def filterWithFlatMap[A](l1: List[A])(pred: A => Boolean): List[A] =
-      val f = (v:A) => pred(v) match
+      val f = (v: A) => pred(v) match
         case true => Cons(v, Nil())
         case _ => Nil()
       flatMap(l1)(f)
-      //flatMap(l1)(v => if(pred(v)) then Cons(v, Nil()) else Nil())
+
+    def max(l: List[Int]): Option[Int] = l match
+      case Cons(h, t) => max(t) match
+        case Option.Some(i) if h > i => Option.Some(h)
+        case Option.Some(i) => Option.Some(i)
+        case Option.None() => Option.Some(h)
+      case Nil() => Option.None()
+
+//    A version of max using the orElse method
+//    def maxWithOrElse(l: List[Int]): Option[Int] = l match
+//      case Cons(h, t) if h >= Option.orElse(max(t), h) => Option.Some(h)
+//      case Cons(h, t) => max(t)
+//      case Nil() => Option.None()
+
+    def getTeacherCourses(l: List[Person]): List[String] =
+      map(filter(l)({case Person.Student(n, a) => false case Person.Teacher(n, c) => true}))({case Person.Teacher(n, c) => c})
+
+    def getTeacherCoursesWithFlatMap(l: List[Person]): List[String] =
+      ???
 
   val l = List.Cons(10, List.Cons(20, List.Cons(30, List.Nil())))
   println(List.sum(l)) // 60
