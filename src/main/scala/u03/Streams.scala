@@ -45,6 +45,21 @@ object Streams extends App:
     def constant[A](init: => A): Stream[A] =
       cons(init, constant(init))
 
+//    @annotation.tailrec
+//    def fib(n: Int, prev: Int, current: Int): Int = n match
+//      case 0 => current
+//      case _ => fib(n-1, prev + current, prev)
+
+    def fib(n: Int): Int = n match
+      case 0 => 0
+      case 1 => 1
+      case _ => fib(n-1) + fib(n-2)
+
+    def fibsStream(): Stream[Int] =
+      def _fibStream(n: Int): Stream[Int] =
+        cons(fib(n), _fibStream(n+1))
+      _fibStream(0)
+    
   end Stream
 
   // var simplifies chaining of functions a bit..
