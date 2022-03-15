@@ -37,7 +37,11 @@ object Streams extends App:
     def iterate[A](init: => A)(next: A => A): Stream[A] =
       cons(init, iterate(next(init))(next))
 
-  // TODO: def drop(....)
+    def drop[A](stream: Stream[A])(n:Int): Stream[A] = stream match
+      case Cons(h, t) if n > 0 => drop(t())(n-1)
+      case Cons(h, t) => stream
+      case _ => Empty()
+
   end Stream
 
   // var simplifies chaining of functions a bit..
