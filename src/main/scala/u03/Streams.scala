@@ -42,6 +42,9 @@ object Streams extends App:
       case Cons(h, t) => stream
       case _ => Empty()
 
+    def constant[A](init: => A): Stream[A] =
+      cons(init, constant(init))
+
   end Stream
 
   // var simplifies chaining of functions a bit..
