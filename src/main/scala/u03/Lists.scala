@@ -53,17 +53,33 @@ object Lists extends App:
         case Option.None() => Option.Some(h)
       case Nil() => Option.None()
 
-//    A version of max using the orElse method
-//    def maxWithOrElse(l: List[Int]): Option[Int] = l match
-//      case Cons(h, t) if h >= Option.orElse(max(t), h) => Option.Some(h)
-//      case Cons(h, t) => max(t)
-//      case Nil() => Option.None()
+//  A version of max using the orElse method
+    def maxWithOrElse(l: List[Int]): Option[Int] = l match
+      case Cons(h, t) if h >= Option.orElse(max(t), h) => Option.Some(h)
+      case Cons(h, t) => max(t)
+      case Nil() => Option.None()
 
     def getTeacherCourses(l: List[Person]): List[String] =
       map(filter(l)({case Person.Student(n, a) => false case Person.Teacher(n, c) => true}))({case Person.Teacher(n, c) => c})
 
     def getTeacherCoursesWithFlatMap(l: List[Person]): List[String] =
-      ???
+      flatMap(l)({case Person.Teacher(n, c) => Cons(c, Nil()) case Person.Student(n, a) => Nil()})
+
+    def foldLeft[A, B](l: List[A])(accumulator: B)(f: (B, A) => B): B = l match
+      case Cons(h, t) => print(h); print(" -> "); println(accumulator); foldLeft(t)(f(accumulator,h))(f)
+      case Nil() => accumulator
+
+    def reverse[A](l: List[A]): List[A] = l match
+      case Cons(h,t) => append(reverse(t), Cons(h, Nil()))
+      case Nil() => Nil()
+
+    def foldRight[A, B](l: List[A])(accumulator: B)(f: (A, B) => B): B = l match
+        case Cons(h, t) => f(h, foldRight(t)(accumulator)(f))
+        case Nil() => accumulator
+    
+    def printList[A](l: List[A]): Int = l match
+      case Cons(h, t) => println(h); printList(t);
+      case Nil() => println("Nil"); 0
 
   val l = List.Cons(10, List.Cons(20, List.Cons(30, List.Nil())))
   println(List.sum(l)) // 60

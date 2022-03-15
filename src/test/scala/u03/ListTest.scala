@@ -52,3 +52,19 @@ class ListTest:
     assertEquals(Cons("OS", Cons("PPS", Nil())), getTeacherCourses(Cons(Person.Student("Davide", 23), Cons(Person.Teacher("Ghini", "OS"), Cons(Person.Student("Simone", 22), Cons(Person.Teacher("Viroli", "PPS"), Nil()))))))
     assertEquals(Cons("OS", Cons("PPS", Nil())), getTeacherCoursesWithFlatMap(Cons(Person.Student("Davide", 23), Cons(Person.Teacher("Ghini", "OS"), Cons(Person.Student("Simone", 22), Cons(Person.Teacher("Viroli", "PPS"), Nil()))))))
 
+  @Test def testFoldLeft() =
+    val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+    assertEquals(-16, foldLeft(lst)(0)( _ - _ )) // -16
+
+  @Test def testFoldRight() =
+    val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+    assertEquals(-8, foldRight(lst)(0)( _ - _ )) // -8
+
+  @Test def testReverse() =
+    val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+    val lstR = Cons(5, Cons(1, Cons(7, Cons(3, Nil()))))
+    assertEquals(lstR, reverse(lst))
+
+  @Test def testPrintList() =
+    val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+    assertEquals(0, printList(lst))
