@@ -66,7 +66,7 @@ object Lists extends App:
       flatMap(l)({case Person.Teacher(n, c) => Cons(c, Nil()) case Person.Student(n, a) => Nil()})
 
     def foldLeft[A, B](l: List[A])(accumulator: B)(f: (B, A) => B): B = l match
-      case Cons(h, t) => print(h); print(" -> "); println(accumulator); foldLeft(t)(f(accumulator,h))(f)
+      case Cons(h, t) => foldLeft(t)(f(accumulator,h))(f)
       case Nil() => accumulator
 
     def reverse[A](l: List[A]): List[A] = l match
