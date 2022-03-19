@@ -26,7 +26,7 @@ object Lists extends App:
 
     def drop[A](l: List[A], n: Int): List[A] = l match
       case Cons(h,t) if n > 0 => drop(t, n-1)
-      case (l: List[A]) => l
+      case _ => l
 
     def append[A](left: List[A], right: List[A]): List[A] = left match
       case Cons(h,t) => Cons(h, append(t, right))

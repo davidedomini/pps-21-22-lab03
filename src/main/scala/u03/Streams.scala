@@ -45,17 +45,15 @@ object Streams extends App:
     def constant[A](init: => A): Stream[A] =
       cons(init, constant(init))
 
-    private def fib(n: Int): Int = n match
-      case 0 => 0
-      case 1 => 1
-      case _ => fib(n-1) + fib(n-2)
-
     def fibsStream(): Stream[Int] =
-      def _fibStream(n: Int): Stream[Int] =
-        cons(fib(n), _fibStream(n+1))
-      _fibStream(0)
-    
+      def _fibStream(prev: Int, current: Int): Stream[Int] =
+        cons(current, _fibStream(current, current + prev))
+      _fibStream(1,0)
+      
   end Stream
+
+
+
 
   // var simplifies chaining of functions a bit..
   var str = Stream.iterate(0)(_ + 1) // {0,1,2,3,..}
